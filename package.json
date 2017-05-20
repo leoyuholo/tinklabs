@@ -2,6 +2,24 @@
   "name": "tink-labs-coding-test",
   "description": "Tink Labs coding test for Senior Back-end Developer",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "nodemon index.js",
+    "test": "mocha",
+    "test-watch": "nodemon --exec npm run test --watch ."
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "lodash": "^4.17.4",
+    "node-fetch": "^1.6.3",
+    "pg": "^6.2.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "database-cleaner": "^1.2.0",
+    "mocha": "^3.4.1",
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0"
   }
 }

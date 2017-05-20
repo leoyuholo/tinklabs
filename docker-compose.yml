@@ -2,6 +2,25 @@ version: '3'
 services:
   db:
     image: postgres
+    environment:
+      - POSTGRES_PASSWORD=tinklabs
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pg:/var/lib/postgresql/data
+      - ./sql:/sql
+    logging:
+      driver: none
+  pgadmin:
+    image: fenglc/pgadmin4
+    ports:
+      - "5050:5050"
+    links:
+      - db:postgres
+    volumes:
+      - ./.pgadmin:/root/.pgadmin
+    logging:
+      driver: none
   web:
     image: node:6
     volumes:
@@ -9,6 +28,6 @@ services:
     ports:
       - "3000:3000"
     working_dir: /app
-    command: npm run dev
+    command: npm run test-watch
     depends_on:
       - db
