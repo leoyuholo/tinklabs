@@ -1,0 +1,7 @@
+{
+  "name": "tink-labs-coding-test",
+  "description": "Tink Labs coding test for Senior Back-end Developer",
+  "scripts": {
+    "dev": "node index.js"
+  }
+}

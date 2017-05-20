@@ -1,0 +1,14 @@
+version: '3'
+services:
+  db:
+    image: postgres
+  web:
+    image: node:6
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    command: npm run dev
+    depends_on:
+      - db
