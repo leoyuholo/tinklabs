@@ -127,5 +127,68 @@ describe('app', function () {
 					);
 			});
 		});
+
+		const withdraw = (accountId, amount) =>
+			request(app)
+				.post(`/account/withdraw/${accountId}`)
+				.send({amount})
+				.expect(200);
+
+		describe('withdraw', function () {
+			it('should forfeit negative withdrawal', function () {
+				return createAccount()
+					.then(account =>
+						request(app)
+							.post(`/account/withdraw/${account.id}`)
+							.send({amount: -20})
+							.expect(400)
+					);
+			});
+
+			it('should forfeit zero withdrawal', function () {
+				return createAccount()
+					.then(account =>
+						request(app)
+							.post(`/account/withdraw/${account.id}`)
+							.send({amount: 0})
+							.expect(400)
+					);
+			});
+
+			it('should withdraw money from account', function () {
+				return createAccount()
+					.then(account =>
+						deposit(account.id, 1000)
+							.then(() => withdraw(account.id, 500))
+							.then(() =>
+								request(app)
+									.get(`/account/${account.id}`)
+									.then(res => {
+										res.body.account.balance.should.be.equal(500);
+									})
+							)
+					);
+			});
+
+			it('should fail to withdraw excess money from account', function () {
+				return createAccount()
+					.then(account =>
+						deposit(account.id, 1000)
+							.then(() =>
+								request(app)
+									.post(`/account/withdraw/${account.id}`)
+									.send({amount: 5000})
+									.expect(400)
+							)
+							.then(() =>
+								request(app)
+									.get(`/account/${account.id}`)
+									.then(res => {
+										res.body.account.balance.should.be.equal(1000);
+									})
+							)
+					);
+			});
+		});
 	});
 });
