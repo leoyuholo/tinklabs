@@ -48,23 +48,83 @@ describe('app', function () {
 			});
 		});
 
+		const createAccount = () =>
+			request(app)
+				.put('/account')
+				.send({owner: {id: 1}})
+				.expect(200)
+				.then(res => res.body.account);
+
 		describe('deactivate', function () {
 			it('should deactivate an account', function () {
-				return request(app)
-					.put('/account')
-					.send({owner: {id: 1}})
-					.expect(200)
-					.then(res => {
-						const account = res.body.account;
-						return request(app)
+				return createAccount()
+					.then(account =>
+						request(app)
 							.delete(`/account/${account.id}`)
 							.expect(200)
 							.then(() =>
 								request(app)
 									.get(`/account/${account.id}`)
 									.expect(404)
-							);
-					});
+							)
+					);
+			});
+		});
+
+		const deposit = (accountId, amount) =>
+			request(app)
+				.post(`/account/deposit/${accountId}`)
+				.send({amount})
+				.expect(200);
+
+		describe('deposit', function () {
+			it('should deposit money into account', function () {
+				return createAccount()
+					.then(account =>
+						deposit(account.id, 1000)
+							.then(() =>
+								request(app)
+									.get(`/account/${account.id}`)
+									.then(res => {
+										res.body.account.balance.should.be.equal(1000);
+									})
+							)
+					);
+			});
+
+			it('should deposit more money into account', function () {
+				return createAccount()
+					.then(account =>
+						deposit(account.id, 1000)
+							.then(() => deposit(account.id, 500))
+							.then(() =>
+								request(app)
+									.get(`/account/${account.id}`)
+									.then(res => {
+										res.body.account.balance.should.be.equal(1500);
+									})
+							)
+					);
+			});
+
+			it('should forfeit negative deposit', function () {
+				return createAccount()
+					.then(account =>
+						request(app)
+							.post(`/account/deposit/${account.id}`)
+							.send({amount: -10})
+							.expect(400)
+					);
+			});
+
+			it('should forfeit zero deposit', function () {
+				return createAccount()
+					.then(account =>
+						request(app)
+							.post(`/account/deposit/${account.id}`)
+							.send({amount: 0})
+							.expect(400)
+					);
 			});
 		});
 	});
