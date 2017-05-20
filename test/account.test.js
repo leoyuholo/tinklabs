@@ -17,12 +17,27 @@ describe('app', function () {
 					.put('/account')
 					.send({owner: {name: 'leo'}})
 					.expect(200)
-					.then((res) => {
-						const account = res.body.account;
+					.then(res => {
 						should.exist(res.body.account);
-						res.body.account.should.have.property('ownerId').that.is.a('number');
-						res.body.account.should.have.property('id').that.is.a('number');
-						res.body.account.should.have.property('balance').that.is.a('number');
+						const account = res.body.account;
+						account.should.have.property('ownerId').that.is.a('number');
+						account.should.have.property('id').that.is.a('number');
+						account.should.have.property('balance').that.is.a('number');
+					});
+			});
+		});
+
+		describe('find', function () {
+			it('should retrieve an account', function () {
+				return request(app)
+					.get('/account/1')
+					.expect(200)
+					.then(res => {
+						should.exist(res.body.account);
+						const account = res.body.account;
+						account.should.have.property('ownerId').that.is.a('number');
+						account.should.have.property('id').that.is.a('number');
+						account.should.have.property('balance').that.is.a('number');
 					});
 			});
 		});
