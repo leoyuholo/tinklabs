@@ -5,7 +5,8 @@
     "dev": "nodemon index.js",
     "lint": "eslint lib test",
     "test": "mocha",
-    "test-watch": "nodemon --exec npm run test --watch ."
+    "test-watch": "nodemon --exec npm run test --watch .",
+    "coverage": "nyc --reporter=lcov mocha"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
@@ -24,6 +25,7 @@
     "mocha": "^3.4.1",
     "nock": "^9.0.13",
     "nodemon": "^1.11.0",
+    "nyc": "^10.3.2",
     "random-name": "^0.1.2",
     "supertest": "^3.0.0"
   }

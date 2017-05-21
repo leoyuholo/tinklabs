@@ -26,8 +26,8 @@ services:
     volumes:
       - .:/app
     ports:
-      - "3000:3000"
+      - "3030:3030"
     working_dir: /app
-    command: npm run test-watch
+    command: npm run coverage
     depends_on:
       - db
