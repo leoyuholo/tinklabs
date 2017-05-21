@@ -18,7 +18,9 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "mocha": "^3.4.1",
+    "nock": "^9.0.13",
     "nodemon": "^1.11.0",
+    "random-name": "^0.1.2",
     "supertest": "^3.0.0"
   }
 }

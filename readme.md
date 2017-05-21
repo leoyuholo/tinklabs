@@ -13,3 +13,9 @@ to start a bash shell in postgres instance, then run:
 psql -U postgres -a -f /sql/tables.sql
 ```
 to create tables.
+
+## TODO
+nock
+lint
+coverage
+documentation
