@@ -15,7 +15,5 @@ psql -U postgres -a -f /sql/tables.sql
 to create tables.
 
 ## TODO
-nock
-lint
 coverage
 documentation

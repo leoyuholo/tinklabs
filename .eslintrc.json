@@ -1,0 +1,16 @@
+{
+    "extends": "airbnb-base",
+    "plugins": [
+        "import"
+    ],
+    "env": {
+      "mocha": true
+    },
+    "rules": {
+      "indent": ["warn", "tab"],
+      "no-tabs": 0,
+      "comma-dangle": ["error", "never"],
+      "curly": ["error", "multi"],
+      "func-names": 0
+    }
+}

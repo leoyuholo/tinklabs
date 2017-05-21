@@ -3,6 +3,7 @@
   "description": "Tink Labs coding test for Senior Back-end Developer",
   "scripts": {
     "dev": "nodemon index.js",
+    "lint": "eslint lib test",
     "test": "mocha",
     "test-watch": "nodemon --exec npm run test --watch ."
   },
@@ -17,6 +18,9 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.2.0",
     "mocha": "^3.4.1",
     "nock": "^9.0.13",
     "nodemon": "^1.11.0",
